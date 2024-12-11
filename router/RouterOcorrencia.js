@@ -10,8 +10,8 @@ module.exports = class RouterOcorrencia {
     }
 
     criarRotasOcorrencia() {
-        this._router.post ('/csv' ,
-            this._controleAluno.controle_post_ocorrencias()
+        this._router.post ('/' ,
+            this._controleOcorrencia.controle_post_ocorrencias()
         ) 
     }
 };

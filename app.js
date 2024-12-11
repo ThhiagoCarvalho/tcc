@@ -4,7 +4,7 @@ const app = express();
 const portaServico = 3000;
 const RouterAluno = require("./router/RouterAluno");
 const RouterFuncionario = require("./router/RouterFuncionario");
-const RouterOcorrencia = require("./router/Ocorrencia");
+const RouterOcorrencia = require("./router/RouterOcorrencia");
 
 app.use(express.json());
 app.use(express.static('js'));

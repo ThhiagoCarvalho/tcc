@@ -1,6 +1,6 @@
 const express = require('express');
-const ControlFuncionario = require('../controle/controleFuncionario');
-const MiddlewareFuncionario = require('../middleware/middlewareFuncionario');
+const ControlFuncionario = require('../controle/controleFuncionarios');
+const MiddlewareFuncionario = require('../middleware/middlewareFuncionarios');
 
 module.exports = class RouterFuncionario {
     constructor() {

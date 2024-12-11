@@ -9,14 +9,17 @@ module.exports = class RouterAluno {
         this._controleAluno = new controlAluno()
         this._middleAluno = new MiddlewareAluno ()
     }
+    criarRotasAlunos() {
 
-    criarRotasAlunos () {
-    this._router.post ('/csv' ,
-        this._controleAluno.controle_csv_alunos()
-    )  
+        const multer = require('multer');
+        const upload = multer({ dest: 'uploads/' }); // Configuração do multer
 
-    }
+        this._router.post('/csv', upload.single('arquivo'), // Middleware do multer para upload do arquivo
+          (req, res) => this._controleAluno.controle_csv_aluno(req, res) // Passa a referência corretamente
+        );
+        return this._router
 
-
+      }
+    
 }
 
