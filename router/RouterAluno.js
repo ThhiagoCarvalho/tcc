@@ -17,6 +17,13 @@ module.exports = class RouterAluno {
         this._router.post('/csv', upload.single('arquivo'), // Middleware do multer para upload do arquivo
           (req, res) => this._controleAluno.controle_csv_aluno(req, res) // Passa a referência corretamente
         );
+
+        this._router.post('/login', 
+          this._middleAluno.validarMatricula,
+          this._middleAluno.verificarAlunoExistente,
+          this._controleAluno.controle_aluno_login
+        )
+        
         return this._router
 
       }

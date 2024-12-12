@@ -11,7 +11,8 @@ module.exports = class RouterAtestado {
 
     criarRotasAtestado() {
         this._router.post ('/csv' ,
-            this._controleAluno.controle_post_atestado()
+            this._controleAtestado.controle_post_atestado
         ) 
+        return this._router
     }
 };

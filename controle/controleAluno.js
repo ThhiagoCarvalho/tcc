@@ -3,6 +3,7 @@ const Aluno = require("../modelo/Alunos");
 const fs = require('fs');
 const readline = require('readline');
 const multer = require('multer');
+const MeuTokenJWT = require(".././modelo/MeuTokenJWT")
 
 // Configuração do multer para salvar arquivos temporariamente
 const upload = multer({ dest: 'uploads/' }); // Diretório temporário para arquivos
@@ -11,7 +12,8 @@ const upload = multer({ dest: 'uploads/' }); // Diretório temporário para arqu
 module.exports = class controlAluno {
   async controle_csv_aluno(request, response) {
     try {
-        const  file  = request; // Multer adiciona o arquivo na propriedade "file"
+        const  file  = request.file; 
+        console.log("file" + file)// Multer adiciona o arquivo na propriedade "file"
       if (!file || !file.path) {
         return response.status(400).json({ error: 'Arquivo CSV não encontrado!' });
       }
@@ -35,8 +37,9 @@ module.exports = class controlAluno {
         aluno.nome = campos[1];
         aluno.turma = campos[2];
         aluno.nascimento = campos[3];
-
-        if (!aluno.verificarAluno()) {
+        const existeAluno = await aluno.getAluno()
+        console.log("existeAluno" + existeAluno)
+        if (!existeAluno) {
           const Alunoscriados = await aluno.createFromCsv();
           if (Alunoscriados) {
             objAluno.push(aluno);
@@ -62,5 +65,24 @@ module.exports = class controlAluno {
       console.error("Error>>>>>" + error);
       response.status(500).json({ error: 'Erro interno do servidor!' });
     }
+  }
+
+
+  async controle_aluno_login (request , response)  {
+    const objAluno = request.aluno
+    const objToken = new MeuTokenJWT ()
+
+    const objClaimsToken = {
+      matricula: objAluno.matricula
+    }
+    
+    const novoToken = objToken.gerarToken(objClaimsToken)
+
+    const objResposta = {
+      resposta : "Sucesso ao logar" ,
+      token : novoToken,
+      Usuario : objAluno
+    }
+    response.status(200).send(objResposta);
   }
 };

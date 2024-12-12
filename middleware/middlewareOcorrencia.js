@@ -1,6 +1,6 @@
-const Alunos = require("../modelo/Funcionarios");
+const Ocorrencias = require("../modelo/Ocorrencias");
 const express = require('express');
 
 
-module.exports = class ControlOcorrencia {
+module.exports = class MiddlewareOcorrencia {
 }

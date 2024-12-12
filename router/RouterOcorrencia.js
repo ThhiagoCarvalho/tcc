@@ -10,8 +10,13 @@ module.exports = class RouterOcorrencia {
     }
 
     criarRotasOcorrencia() {
-        this._router.post ('/' ,
-            this._controleOcorrencia.controle_post_ocorrencias()
-        ) 
+        try{
+            this._router.post ('/' ,
+                this._controleOcorrencia.controle_post_ocorrencia
+            ) 
+            return this._router
+        }catch(error){
+            console.log("erroR>>>>>>" + error)
+        }
     }
 };

@@ -1,4 +1,4 @@
-const Alunos = require("../modelo/Funcionarios");
+const Funcionarios = require("../modelo/Funcionarios");
 const express = require('express');
 
 
