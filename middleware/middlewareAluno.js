@@ -7,9 +7,6 @@ module.exports = class MiddlewareAluno {
     try {
       const  matricula = req.body.matricula;
 
-      if (!matricula) {
-        return res.status(400).json({ error: 'Matrícula do aluno não fornecida.' });
-      }
       const objAluno = new Alunos()
       objAluno.matricula = matricula
       const alunoExistente = await objAluno.getAluno();
@@ -48,30 +45,12 @@ module.exports = class MiddlewareAluno {
 
   validarMatricula (request,response,next)  { 
     const matricula = request.body.matricula
-    if  (!matricula || length(matricula)!=8){
-      return res.status(400).json({ error: 'Matrícula incorreta' });
+    if  (!matricula || matricula.length !== 8){
+      return response.status(400).json({ error: 'Matrícula incorreta' });
     }else { 
       next()
     }
 
   }
 
-  async verificarDuplicidadeAluno(req, res, next) {
-    try {
-      const  matricula  = req.body.matricula;
-
-      const objAluno = new Alunos()
-      objAluno.matricula = matricula
-      const alunoExistente = await objAluno.getAluno();
-
-      if (alunoExistente) {
-        return res.status(409).json({ error: 'Aluno já cadastrado com esta matrícula.' });
-      }
-
-      next();
-    } catch (error) {
-      console.error('Erro ao verificar duplicidade:', error);
-      res.status(500).json({ error: 'Erro interno do servidor.' });
-    }
-  }
 };

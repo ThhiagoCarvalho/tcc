@@ -9,26 +9,27 @@ module.exports = class Aluno {
         this._nascimento = null
     }
 
-    async getAluno ()  {
-        const conexao = Banco.getConexao()
-        console.log(this.matricula)
-        const mysql = "select count(*) as qtd,matricula,nome,turma from Aluno where matricula =  ? "
-           
+    async getAluno() {
+        const conexao = Banco.getConexao();
+        console.log(this.matricula);
+        const mysql = "SELECT matricula, nome, turma FROM Aluno WHERE matricula = ?";
+    
         try {
-            const [result] = await conexao.promise().execute(mysql , [this._matricula])
-            for (let tupla of result) {
-                if (tupla.qtd === 1) {
-                    this.matricula = tupla.matricula
-                    this.nome = tupla.nome;
-                    this.turma = tupla.turma;
-                    return true;
-                }  
-            }    
-
-        }catch(error) {
-            console.log("Erro>>"  + error)
+            const [result] = await conexao.promise().execute(mysql, [this._matricula]);
+            if (result.length === 1) {
+                const aluno = result[0];
+                this.matricula = aluno.matricula;
+                this.nome = aluno.nome;
+                this.turma = aluno.turma;
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.log("Erro>>" + error);
+            return false;
         }
-    } 
+    }
+    
 
 
     async createFromCsv () {

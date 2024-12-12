@@ -8,7 +8,6 @@ const MeuTokenJWT = require(".././modelo/MeuTokenJWT")
 // Configuração do multer para salvar arquivos temporariamente
 const upload = multer({ dest: 'uploads/' }); // Diretório temporário para arquivos
 
-// Classe de controle
 module.exports = class controlAluno {
   async controle_csv_aluno(request, response) {
     try {

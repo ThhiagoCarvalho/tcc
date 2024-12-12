@@ -3,41 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Upload de CSV</title>
 </head>
 <body>
-    <input type="file" id="txtarquvio" placeholder="arquivo">
+    <input type="file" id="txtarquvio" placeholder="arquivo" accept=".csv">
     <button id="btnEnviar">Clique aqui</button>
 </body>
 <script>
-    const btn = document.getElementById('btnEnviar')
-    const txtArquivo = document.getElementById('txtarquvio')
+    const btn = document.getElementById('btnEnviar');
+    const txtArquivo = document.getElementById('txtarquvio');
 
     btn.onclick = function() { 
-        cadastrar()
-    }
+        cadastrar();
+    };
 
-    function cadastrar ( )  {
+    function cadastrar() {
         let arquivo = txtArquivo.files[0];
-
+        if (!arquivo) {
+            console.error("Nenhum arquivo selecionado.");
+            return;
+        }
 
         const formData = new FormData();
-        formData.append('arquivo', arquivo); 
+        formData.append('arquivo', arquivo);
 
-         let uri = '/alunos/csv';
+        let uri = '/alunos/csv';
         fetch(uri, {
-            method: "post",
-            body: JSON.stringify(formData)
-        }).then((response) => {
+            method: "POST",
+            body: formData
+        })
+        .then((response) => {
             return response.json();
-        }).then((data) => {
-            console.log(data)
-        }).catch((error) => {
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
             console.error("Error:", error);
-
         });
-
-        }
+    }
 </script>
-
 </html>
