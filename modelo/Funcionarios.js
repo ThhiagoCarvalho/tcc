@@ -17,7 +17,7 @@ module.exports = class Funcionario {
         const mysql = "SELECT * FROM Funcionario WHERE cpf = ?";
     
         try {
-            const [result] = await conexao.promise().execute(mysql, [this._matricula]);
+            const [result] = await conexao.promise().execute(mysql, [this._cpf]);
             if (result.length === 1) {
                 const funcionario = result[0];
                 this._nome = funcionario.nome;

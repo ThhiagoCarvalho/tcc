@@ -5,6 +5,8 @@ const express = require('express');
 module.exports = class MiddlewareFuncionario {
 
     async verificarFuncionarioExistente(req, res, next) {
+        console.log("oii")
+
         try {
           const  cpf = req.body.cpf;
           const  senha = req.body.senha;

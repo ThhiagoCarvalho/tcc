@@ -8,7 +8,7 @@ const readline = require('readline');
 
 module.exports = class ControlFuncionario {
 
- async controle_csv_funcionarios ( )  { 
+ async controle_csv_funcionarios (request,response )  { 
     try {
         const file = request.file; // Multer adiciona o arquivo na propriedade "file"
         
@@ -63,11 +63,12 @@ module.exports = class ControlFuncionario {
         });
     } catch (error) {
         console.error("Error>>>>" + error);
-        response.status(500).json({ error: 'Erro interno do servidor!' });
+        return response.status(500).json({ error: 'Erro interno do servidor!' });
     }
  }
 
     async controle_funcionario_login(request, response) {
+        console.log("oii")
         const objFuncionario = request.funcionario;
         const objToken = new MeuTokenJWT();
 
