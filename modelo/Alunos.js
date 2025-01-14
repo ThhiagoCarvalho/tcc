@@ -45,6 +45,19 @@ module.exports = class Aluno {
         }
     }
 
+
+    async getMatricula() {
+        const conexao = Banco.getConexao();
+        const mysql = "SELECT matricula FROM Aluno WHERE matricula LIKE ? LIMIT 3;";
+        try {
+            const [result] = await conexao.promise().execute(mysql, [`%${this._matricula}%`]);
+            return result;
+        } catch (error) {
+            console.log("Erro >>" + error);
+        }
+    }
+    
+
     get matricula() {
         return this._matricula;
     }

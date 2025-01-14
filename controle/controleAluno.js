@@ -70,7 +70,6 @@ module.exports = class controlAluno {
   async controle_aluno_login (request , response)  {
     const objAluno = request.aluno
     const objToken = new MeuTokenJWT ()
-
     const objClaimsToken = {
       matricula: objAluno.matricula
     }
@@ -83,5 +82,19 @@ module.exports = class controlAluno {
       Usuario : objAluno
     }
     response.status(200).send(objResposta);
+
   }
+
+  async controle_aluno_getMatricula (request , response)  {
+    const objAluno = new Aluno()
+    objAluno.matricula = request.params.matricula
+    const matricula =  await objAluno.getMatricula ( )
+    console.log(matricula)
+    const objResposta = {
+      matriculas : matricula
+    }
+    response.status(200).send(objResposta);
+
+  }
+
 };

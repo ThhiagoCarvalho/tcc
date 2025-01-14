@@ -15,7 +15,7 @@ module.exports = class RouterFuncionario {
         const upload = multer({ dest: 'uploads/' }); // Configuração do multer
 
         this._router.post('/csv', upload.single('arquivo'), // Middleware do multer para upload do arquivo
-          (req, res) => this._controleFuncionario.controle_csv_funcionarios(req, res) // Passa a referência corretamente
+            (req, res) => this._controleFuncionario.controle_csv_funcionarios(req, res) // Passa a referência corretamente
         );
 
         this._router.post('/login', 
