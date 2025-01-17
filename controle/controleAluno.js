@@ -96,5 +96,23 @@ module.exports = class controlAluno {
     response.status(200).send(objResposta);
 
   }
+  async controle_aluno_getAluno (request , response)  {
+    const objAluno = new Aluno()
+    objAluno.matricula = request.params.matricula
+    const existeAluno =  await objAluno.getAluno ( )
+    if (existeAluno)  { 
+      const objResposta = {
+        nome : objAluno.nome,
+        turma : objAluno.turma
+      }
+      response.status(200).send(objResposta);
+
+    }else { 
+      const objResposta = {
+        msg  : "Nao existe este aluno"
+      }
+      response.status(404).send(objResposta);
+    }
+  }
 
 };

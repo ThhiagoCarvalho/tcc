@@ -30,6 +30,10 @@ module.exports = class RouterAluno {
       this._controleAluno.controle_aluno_getMatricula
     );
 
+    this._router.get('/:matricula', 
+      this._controleAluno.controle_aluno_getAluno
+    );
+
     return this._router;
   }
 }
