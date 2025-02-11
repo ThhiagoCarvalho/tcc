@@ -5,8 +5,6 @@ const express = require('express');
 module.exports = class MiddlewareFuncionario {
 
     async verificarFuncionarioExistente(req, res, next) {
-        console.log("oii")
-
         try {
           const  cpf = req.body.cpf;
           const  senha = req.body.senha;
@@ -32,10 +30,10 @@ module.exports = class MiddlewareFuncionario {
 
 
     validarDadosFuncionario(req, res, next) {
-        const { cpf,senha } = req.body;
+        const { cargo,usuario,senha } = req.body;
     
-        if (!cpf || !senha) {
-          return res.status(400).json({ error: 'Os campos cpf e senha são obrigatórios.'});
+        if (!cargo || !usuario || senha ) {
+          return res.status(400).json({ error: 'Preencha todos os campos!'});
         } 
         next();
     }

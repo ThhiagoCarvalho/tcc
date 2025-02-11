@@ -9,32 +9,103 @@
 <body>
     <div class="container">
         <div class="header">
-        <div class="logo">
-            <a href="#">
-                <img src="../assets/Captura de tela 2024-03-22 183053 (2).png">
-            </a>
+            <div class="logo">
+                <img src="../assets/logo.png">
+            </div>
+            <h2>Sistema de Ocorrências UNIVAP Centro</h2>
+        </div>
+
+        <div class="login_body">
+                <form>
+                    <div class="input_box">
+                        <select id="opcoestxt" name="Cargos">
+                            <option value="" selected disabled>Cargo</option>
+                            <option value="orientador">Orientador</option>
+                            <option value="coordenador">Coordenador</option>
+                            <option value="diretor">Diretor</option>
+                        </select>
+                    </div>
+
+                    <div class="input_box">
+                        <input type="text" placeholder="Usuário" id="usuario" required>
+                    </div>
+
+                    <div class="input_box">
+                        <input type="password" placeholder="Senha" id="senhatxt" required>
+                    </div>
+                    <div class="forget_passoword">
+                        <p>Esqueceu sua senha ? <a href="#">Clique aqui!</a></p>
+                    </div>
+
+                    <div>
+                        <button class="buttonOK">Entrar</button>
+                    </div>
+
+                    <div id="error-message" class="errorMensagge" style="display: none;"> </div>
+
+                </form>
         </div>
     </div>
+    <script>
+        const mensage_error = document.getElementById("error-message")
+        const buttonOK = document.getElementById("buttonOK")
+        const cargotxt = document.getElementById("opcoestxt")
+        const usuariotxt = document.getElementById("usuariotxt")
+        const senhatxt = document.getElementById("senhatxt")
+        
+        buttonOK.onclick = function() { 
+            login();
+        };
 
-    <div class="login_body">
-            <h2>LOGIN</h2>
-            <form>
-                <div class="input_box">
-                    <input type="email" placeholder="Email" required>
-                </div>
+        function  login() { 
+            let cargo = cargotxt.value
+            let usuario = usuariotxt.value
+            let senha = senhatxt.value
 
-                <div class="input_box">
-                    <input type="password" placeholder="Senha" required>
-                </div>
-                <div class="forget_passoword">
-                    <p>Esqueceu sua senha ? <a href="#">Clique aqui!</a></p>
-                </div>
+            let jsonEnvio = { 
+                "cargo":cargo,
+                "usuario":usuario,
+                "senha":senha
+            }
 
-                <div>
-                    <button class="submit">Entrar</button>
-                </div>
-            </form>
-    </div>
-    </div>
+            let uri = '/funcionarios/login';
+            fetch(uri, {
+                method: "POST",
+                body: jsonEnvio
+            })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                processarResultados()
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+        }
+        
+
+        function processarResultados (texto_json) { 
+            try {
+            if (texto_json.status == false){
+                mensage_error.textContent = texto_json.msg
+                mensage_error.style.display = "block"
+                return; 
+            } else {
+                mensage_error.style.display = "none"
+                const objUsuario = {
+                    "usuario":usuario,
+                    "cargo":cargo
+                }
+                localStorage.setItem("Usuario", JSON.stringify(objUsuario)); 
+                window.location.href= "../html/paginaLogada.html";
+            }   
+        }  catch (error) {
+        console.error("Erro ao processar o JSON:", error);
+        console.error("A resposta não é um JSON válido:", json);
+        }    
+    }
+    </script>
 </body>
+
 </html>

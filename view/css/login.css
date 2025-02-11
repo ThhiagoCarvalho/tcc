@@ -18,17 +18,26 @@ input::placeholder {
     font-size: 15px;
 }
 
+
+
 .logo img {
-    height:  22%;
-    width: 22%;
+    height: 32%;
+    width: 32%;
     margin: auto;
     display: block;
 
 }
+.header h2{
+    padding-top: 3%;
+    display: block;
+    margin: auto;
+
+}
 .container { 
-    margin: 5%;
+    margin: 3%;
 }
 .header {
+    flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,8 +48,8 @@ input::placeholder {
     z-index: 90;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
     position: relative;
-    max-width: 450px;
-    height: 490px;
+    max-width: 400px;
+    height: 390px;
     margin-left: 50%;
     background-color: rgba(238, 232, 232, 0.75);
     border-radius: 10px;
@@ -56,7 +65,8 @@ input::placeholder {
     text-align: center;
 }
 
-.login_body input {
+.login_body input,select {
+    border-radius: 10px;
     font-size: 15px;
     height: 50px;
     width: 100%;
@@ -82,7 +92,7 @@ input::placeholder {
     width: 100%;
     color: #fff;
     background-color: #065da4;
-    border-radius: 3px;
+    border-radius: 25px;
     font-weight: bold;
     font-size: 16px;
     border: none;

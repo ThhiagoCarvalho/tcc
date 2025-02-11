@@ -100,7 +100,7 @@
                             <textarea class="form-control" id="relato" rows="2" placeholder="" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="conduta" class="form-label">Conduta</label>
+                            <label for="conduta" class="form-label">Arquivo' opcional'</label>
                             <input type="text" class="form-control" id="conduta" placeholder="" required>
                         </div>
 
@@ -123,8 +123,9 @@
         const botaoOk = document.getElementById("botaoOk")
         const divCardAluno = document.getElementById("studentInfo")
 
+        
         matriculaAluno.addEventListener('input', function () {
-            const query = matriculaAluno.value;
+            const query = matriculaAluno.value; 
             sugestaoMatriculas.innerHTML = '';
 
             if (query) {
