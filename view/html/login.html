@@ -19,14 +19,6 @@
 
         <div class="login_body">
                 <form>
-                    <div class="input_box">
-                        <select id="opcoestxt" name="Cargos">
-                            <option value="" selected disabled>Cargo</option>
-                            <option value="orientador">Orientador</option>
-                            <option value="coordenador">Coordenador</option>
-                            <option value="diretor">Diretor</option>
-                        </select>
-                    </div>
 
                     <div class="input_box">
                         <input type="text" placeholder="Usuário" id="usuario" required>
@@ -51,7 +43,6 @@
     <script>
         const mensage_error = document.getElementById("error-message")
         const buttonOK = document.getElementById("buttonOK")
-        const cargotxt = document.getElementById("opcoestxt")
         const usuariotxt = document.getElementById("usuariotxt")
         const senhatxt = document.getElementById("senhatxt")
         
@@ -60,12 +51,10 @@
         };
 
         function  login() { 
-            let cargo = cargotxt.value
             let usuario = usuariotxt.value
             let senha = senhatxt.value
 
             let jsonEnvio = { 
-                "cargo":cargo,
                 "usuario":usuario,
                 "senha":senha
             }
