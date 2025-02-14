@@ -21,7 +21,7 @@
 }
 
 .menu-desktop nav ul li {
-    padding: 7px;
+    padding: 10px;
 }
 
 
@@ -185,7 +185,6 @@ button.ativo {
 @media screen and (max-width:700px) {
     .menu-desktop nav ul  {
         display: none;
-        
     }
     .menu-mobile.abrir{
         visibility: visible;
@@ -201,49 +200,5 @@ button.ativo {
     
     .container{
         display: block;
-        padding: 10px;
-    }
-
-    .menu-desktop{
-        position: relative;
-        right:  17px;
-        width: 80px;
-    }
- 
-}
-
- 
-
-@media screen and (max-width: 370px) {
-
-   .menu-desktop{
-        position: relative;
-        right:  17px;
-        width: 80px;
-        height: auto;
-    }
-    .container {
-        position: relative;
-        right: 9px;
-        padding: 11px ;
-        display: flex;
-        flex-direction: column; /* Empilha os elementos em coluna */
-        align-items: center; /* Centraliza os itens */
-    }
-
-    .caixas {
-        flex-direction: column; /* Mantém as caixas empilhadas */
-        align-items: center;
-    }
-
-    .box-dadosRecentes,
-    .box-AlunosAlerta,
-    .box-ocorrenciasPendentes {
-        width: 100%; /* Ocupa toda a largura disponível */
-        min-width: 161px; /* Limita a largura */
-        height: auto; /* Mantém a altura dinâmica */
     }
 }
-
-
-

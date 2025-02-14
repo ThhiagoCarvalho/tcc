@@ -3,15 +3,18 @@
     margin: 0;
     box-sizing: border-box;
     font-family: "Poppins", serif;
+    
 }
 .wrapper {
-    display: flex; /* Menu e conteúdo lado a lado */
+    display: flex;
+     /* Menu e conteúdo lado a lado */
 }
 
 .menu-desktop{
     text-align:center;
     height: 100vh;
     padding: 20px;
+    
     background-color: #00488B;
 }
 
@@ -21,7 +24,7 @@
 }
 
 .menu-desktop nav ul li {
-    padding: 7px;
+    padding: 10px;
 }
 
 
@@ -81,6 +84,7 @@ header .menu-desktop nav ul li a {
     width: 100%;
     margin-right: auto;
     display: flex;
+    height: 100vh;
     flex-direction: column; 
 }
 .caixas {
@@ -108,7 +112,7 @@ header .menu-desktop nav ul li a {
     width: 100%;
     background-color:#00488B;
     visibility: hidden;
-    height: 0;
+    height: 500px;
     transition: 0.5s;
     overflow: hidden;
     /* quando fechar o menu eles vao junto */
@@ -172,20 +176,17 @@ button.ativo .linha:nth-child(2){
 }
 
 button.ativo {
-    
+
         position: fixed; /* Fixa o botão na tela */
         top: 20px; /* Ajuste conforme necessário */
         right: 20px; /* Ajuste conforme necessário */
         z-index: 1100; /* Garante que fique acima do menu */
-    
-    
 }
 
 
 @media screen and (max-width:700px) {
     .menu-desktop nav ul  {
         display: none;
-        
     }
     .menu-mobile.abrir{
         visibility: visible;
@@ -197,53 +198,83 @@ button.ativo {
         z-index: 1000;
 
     }
-
-    
     .container{
         display: block;
-        padding: 10px;
     }
-
-    .menu-desktop{
-        position: relative;
-        right:  17px;
-        width: 80px;
-    }
- 
 }
 
- 
 
-@media screen and (max-width: 370px) {
+/*estilizacao do forms*/
+.container-wrapper {
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo */
+    text-align:center;
+    gap: 20px; /* Espaço entre os elementos */
+    padding: 20px;
+}
 
-   .menu-desktop{
-        position: relative;
-        right:  17px;
-        width: 80px;
-        height: auto;
+.form-container {
+    width: 300px; /* Largura do formulário */
+    max-width: 400px; /* Evita que fique muito grande */
+}
+
+.student-info {
+    width: 200px; /* Largura do card */
+    max-width: 300px;
+    height: 330px;
+    background-color: #1a75c4;
+    color: white;
+    padding: 15px;
+    border-radius: 9px;
+    display: none; /* Oculto inicialmente */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 640px) {
+
+
+    .form-container{
+        width: 200px ;
     }
-    .container {
-        position: relative;
-        right: 9px;
-        padding: 11px ;
-        display: flex;
-        flex-direction: column; /* Empilha os elementos em coluna */
-        align-items: center; /* Centraliza os itens */
+    .student-info{
+        padding: 20px;
     }
+}
 
-    .caixas {
-        flex-direction: column; /* Mantém as caixas empilhadas */
+@media (max-width: 550px) { /* CORRETO */
+    .container-wrapper {
+        flex-direction: column; /* Empilha no mobile */
         align-items: center;
     }
 
-    .box-dadosRecentes,
-    .box-AlunosAlerta,
-    .box-ocorrenciasPendentes {
-        width: 100%; /* Ocupa toda a largura disponível */
-        min-width: 161px; /* Limita a largura */
-        height: auto; /* Mantém a altura dinâmica */
+
+    .form-container {
+        width: 100%; /* Ocupa toda a largura */
+        max-width: 350px; /* Limita para não ficar exagerado */
     }
 }
 
+@media (max-width: 340px) { /* CORRETO */
 
+    .divpesquisa{display: none;}
+}
+    .suggestions {
+        border: 1px solid #ddd;
+        border-radius: 9px;
+        max-height: 150px;
+        overflow-y: auto;
+        position: absolute;
+        background: white;
+        width: 85%;
+    }
+    .suggestions div {
+        padding: 10px;
+        cursor: pointer;
+    }
+    .suggestions div:hover {
+        background-color: #f0f0f0;
+    }
 
+    .modal-title{
+        margin-bottom: 10px;
+    }

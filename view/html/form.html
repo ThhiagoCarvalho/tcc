@@ -9,32 +9,44 @@
 
     <title>Document</title>
     <style>
-.student-info {
-    margin-top: 26px;
-    border-radius: 9px;
-    position: absolute;
-    margin-right: 9%;
-    top: 0;
-    width: 200px;
-    height: 73%; /* Ajuste a altura conforme necessário */
-    background-color: #1a75c4;
-    color: white;
-    padding: 15px;
-    display: none; /* Oculta a aba inicialmente */
-    z-index: 1051; /* Aumente o z-index para ser maior que o modal */
-    transition: right 0.3s ease-in-out;
-}
+    .container-wrapper {
+        display: flex;
+        justify-content: center; /* Centraliza o conteúdo */
+        align-items: flex-start;
+        gap: 20px; /* Espaço entre os elementos */
+        padding: 20px;
+    }
+
+    .form-container {
+        width: 40%; /* Largura do formulário */
+        max-width: 400px; /* Evita que fique muito grande */
+    }
+
+    .student-info {
+        width: 30%; /* Largura do card */
+        max-width: 300px;
+        height: 350px;
+        background-color: #1a75c4;
+        color: white;
+        padding: 15px;
+        border-radius: 9px;
+        display: none; /* Oculto inicialmente */
+    }
+
+    /* Responsividade para telas menores */
+    @media (max-width: 600px) {
+        .container-wrapper {
+            flex-direction: column; /* Empilha no mobile */
+            align-items: center;
+        }
+
+        .form-container, .student-info {
+            width: 90%; /* Ocupa quase toda a largura */
+            max-width: 100%;
+        }
+    }
 
 
-.student-info.show {
-    display: block;
-    right: 0;
-}
-
-.modal-content {
-    position: relative;
-    z-index: 1040; /* Certifique-se de que o z-index do modal é menor que o do card */
-}
 
         .navbar { 
             background-color: #1a75c4;
@@ -64,56 +76,55 @@
         .suggestions div:hover {
             background-color: #f0f0f0;
         }
+
+        .modal-title{
+            margin-bottom: 10px;
+        }
         
     </style>
 </head>
 <body>
 
 
-    <div class="navbar">
-        <!-- Botão para abrir o modal -->
-        <a href="#" id="abrir-forms" data-bs-toggle="modal" data-bs-target="#userModal">
-            Clique aqui para abrir o formulário
-        </a>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+
+    <div class="container-wrapper">
+        <!-- Div do formulário -->
+        <div class="form-container">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Formulário de Cadastro</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title">Formulário de Cadastro</h5>
                 </div>
                 <div class="modal-body">
                     <form id="userForm">
                         <div class="mb-3">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="matricula" placeholder="" required>
-                                <span class="input-group-text" id="botaoPesquisa"><i class="bi bi-search"></i></span>
+                                <span class="input-group-text" id="botaoPesquisa">
+                                    <i class="bi bi-search"></i>
+                                </span>
                             </div>
                             <div class="suggestions" id="sugestaoMatriculas"></div>
                         </div>
-  
+      
                         <div class="mb-3">
                             <label for="relato" class="form-label">Relato do funcionário</label>
-                            <textarea class="form-control" id="relato" rows="2" placeholder="" required></textarea>
+                            <textarea class="form-control" id="relato" rows="2" required></textarea>
                         </div>
+    
                         <div class="mb-3">
-                            <label for="conduta" class="form-label">Arquivo' opcional'</label>
-                            <input type="text" class="form-control" id="conduta" placeholder="" required>
+                            <label for="conduta" class="form-label">Arquivo 'opcional'</label>
+                            <input type="text" class="form-control" id="conduta" required>
                         </div>
-
+    
                         <button type="submit" class="btn btn-primary" id="botaoOk">Enviar</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <div id="studentInfo" class="student-info">
-
+    
+        <!-- Card do aluno -->
+        <div id="studentInfo" class="student-info"></div>
     </div>
 
     <script>
@@ -167,60 +178,50 @@
             criarAbaAluno()
         }
 
-        function criarAbaAluno () {
-            console.log(matriculaAluno.value)
-
-            let uri_get_aluno = `/alunos/${matriculaAluno.value}`;
-                fetch(uri_get_aluno, {
-                    method: 'get',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    processarDadosAlunos(data);
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-            const studentInfo = document.getElementById('studentInfo');
-            studentInfo.classList.add('show');
+        function criarAbaAluno() {
+    let uri_get_aluno = `/alunos/${matriculaAluno.value}`;
+    fetch(uri_get_aluno, {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        processarDadosAlunos(data);
+        document.getElementById('studentInfo').style.display = 'block'; // Exibe o card
 
-        function processarDadosAlunos (resultadojson) {
-            console.log(resultadojson)
-            if (resultadojson) {
-                const studentInfo = document.getElementById('studentInfo');
-                studentInfo.innerHTML = '';
-                const nome = document.createElement("p");
-                nome.textContent = `Nome Completo: ${resultadojson.nome}`;
-                
-                const turma = document.createElement("p");
-                turma.textContent = `Turma: ${resultadojson.turma}`;
-                
-                //const curso = document.createElement("p");
-                //curso.textContent = `Curso: ${resultadojson.matricula.curso}`;
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+}
 
-                const ocorerencias = document.createElement("p");
-                ocorerencias.textContent = `Ocorrências: ${resultadojson.turma}`;
+function processarDadosAlunos(resultadojson) {
+    const studentInfo = document.getElementById('studentInfo');
+    studentInfo.innerHTML = '';
 
-                const advertencias = document.createElement("p");
-                advertencias.textContent = `Advertências: ${resultadojson.turma}`;
-                
-                const suspensao = document.createElement("p");
-                suspensao.textContent = `Suspensão: ${resultadojson.turma}`;
+    const closeButton = document.createElement("button");
+    closeButton.innerHTML = "&times;";
+    closeButton.style.float = "right";
+    closeButton.style.background = "transparent";
+    closeButton.style.border = "none";
+    closeButton.style.color = "white";
+    closeButton.style.fontSize = "20px";
+    closeButton.style.cursor = "pointer";
+    closeButton.onclick = () => studentInfo.classList.remove('show');
 
-                studentInfo.appendChild(nome);
-                studentInfo.appendChild(turma);
-                //studentInfo.appendChild(curso);
-                studentInfo.appendChild(ocorerencias);
-                studentInfo.appendChild(advertencias);
-                studentInfo.appendChild(suspensao);
+    const nome = document.createElement("p");
+    nome.textContent = `Nome Completo: ${resultadojson.nome}`;
+    
+    const turma = document.createElement("p");
+    turma.textContent = `Turma: ${resultadojson.turma}`;
 
-            }
-        }
+    studentInfo.appendChild(closeButton);
+    studentInfo.appendChild(nome);
+    studentInfo.appendChild(turma);
+}
 
         botaoOk.onclick = function ()  {
             criarOcorrencia()
