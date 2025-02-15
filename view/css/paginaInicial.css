@@ -108,6 +108,7 @@ header .menu-desktop nav ul li a {
     width: 100%;
     background-color:#00488B;
     visibility: hidden;
+     z-index: 1500; 
     height: 0;
     transition: 0.5s;
     overflow: hidden;
@@ -178,7 +179,6 @@ button.ativo {
         right: 20px; /* Ajuste conforme necessário */
         z-index: 1100; /* Garante que fique acima do menu */
     
-    
 }
 
 
@@ -194,7 +194,7 @@ button.ativo {
  
     #btn-menu {
         display: block;
-        z-index: 1000;
+        z-index: 1501;
 
     }
 
@@ -217,6 +217,9 @@ button.ativo {
 
 @media screen and (max-width: 370px) {
 
+    .container .texto-inicio{
+        padding-right: 2px ;
+    }
    .menu-desktop{
         position: relative;
         right:  17px;
@@ -225,7 +228,8 @@ button.ativo {
     }
     .container {
         position: relative;
-        right: 9px;
+        right: 14px;
+        height: 100vh;
         padding: 11px ;
         display: flex;
         flex-direction: column; /* Empilha os elementos em coluna */
@@ -236,7 +240,10 @@ button.ativo {
         flex-direction: column; /* Mantém as caixas empilhadas */
         align-items: center;
     }
+    .box-ocorrenciasPendentes {
+        margin-top:25px;
 
+    }
     .box-dadosRecentes,
     .box-AlunosAlerta,
     .box-ocorrenciasPendentes {
