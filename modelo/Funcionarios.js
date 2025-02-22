@@ -8,22 +8,20 @@ module.exports = class Funcionario {
         this._cpf = ""
         this._senha = ""
         this._TipoFuncionario_idTipoFuncionario = null
-
     }
     
-    async getFuncionario() {
+    async getFuncionario(registrocpf) {
         const conexao = Banco.getConexao();
         console.log(this.matricula);
-        const mysql = "SELECT * FROM Funcionario WHERE cpf = ?";
+        const mysql = "SELECT * FROM Funcionario WHERE senha = ? and registro = ? OR cpf = ? ";
     
         try {
-            const [result] = await conexao.promise().execute(mysql, [this._cpf]);
+            const [result] = await conexao.promise().execute(mysql, [this._senha.registrocpf,registrocpf]);
             if (result.length === 1) {
                 const funcionario = result[0];
                 this._nome = funcionario.nome;
                 this._cpf = funcionario.cpf;
                 this._TipoFuncionario_idTipoFuncionario = funcionario.TipoFuncionario_idTipoFuncionario;
-
                 return true;
             }
             return false;

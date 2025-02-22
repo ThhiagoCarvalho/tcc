@@ -21,7 +21,7 @@
                 <form>
 
                     <div class="input_box">
-                        <input type="text" placeholder="Usuário" id="usuario" required>
+                        <input type="text" placeholder="Registro ou CPF" id="regristocpf" required>
                     </div>
 
                     <div class="input_box">
@@ -43,7 +43,7 @@
     <script>
         const mensage_error = document.getElementById("error-message")
         const buttonOK = document.getElementById("buttonOK")
-        const usuariotxt = document.getElementById("usuariotxt")
+        const regristocpf = document.getElementById("regristocpf")
         const senhatxt = document.getElementById("senhatxt")
         
         buttonOK.onclick = function() { 
@@ -51,11 +51,11 @@
         };
 
         function  login() { 
-            let usuario = usuariotxt.value
+            let regristocpf = regristocpf.value
             let senha = senhatxt.value
 
             let jsonEnvio = { 
-                "usuario":usuario,
+                "regristocpf":regristocpf,
                 "senha":senha
             }
 
@@ -84,12 +84,8 @@
                 return; 
             } else {
                 mensage_error.style.display = "none"
-                const objUsuario = {
-                    "usuario":usuario,
-                    "cargo":cargo
-                }
-                localStorage.setItem("Usuario", JSON.stringify(objUsuario)); 
-                window.location.href= "../html/paginaLogada.html";
+                localStorage.setItem("Usuario", JSON.stringify(texto_json.Usuario)); 
+                window.location.href= "../html/paginaInicial.html";
             }   
         }  catch (error) {
         console.error("Erro ao processar o JSON:", error);

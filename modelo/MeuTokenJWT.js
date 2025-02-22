@@ -24,8 +24,10 @@ module.exports  = class MeuTokenJWT  {
             iat: Math.floor(Date.now() / 1000), // Momento de criação (em segundos)
             exp: Math.floor(Date.now() / 1000) + this._duracaoToken, // Expiração (em segundos)
             nbf: Math.floor(Date.now() / 1000), // Não é válido antes do tempo especificado
-            jti: require('crypto').randomBytes(16).toString('hex'), // Identificador único (jti)
-            matricula: parametroClaims.matricula, // Claims públicas
+            jti: require('crypto').cpf(16).toString('hex'), // Identificador único (jti)
+            cpf: parametroClaims.cpf, // Claims públicas -> cpf
+            senha: parametroClaims.senha, // Claims públicas -> senha
+
         };
 
         const token = jwt.sign(payload, this._key, { algorithm: this._alg, header: headers });

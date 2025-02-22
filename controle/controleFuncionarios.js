@@ -71,10 +71,11 @@ module.exports = class ControlFuncionario {
         console.log("oii")
         const objFuncionario = request.funcionario;
         const objToken = new MeuTokenJWT();
+        const  senha = req.body.senha;
 
         const objClaimsToken = {
             cpf: objFuncionario.cpf,
-            senha: objFuncionario.senha
+            senha: senha,
         };
 
         const novoToken = objToken.gerarToken(objClaimsToken);
