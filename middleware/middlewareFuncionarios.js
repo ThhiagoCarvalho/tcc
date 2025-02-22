@@ -6,14 +6,13 @@ module.exports = class MiddlewareFuncionario {
 
     async verificarFuncionarioExistente(req, res, next) {
         try {
-          const  cpf = req.body.cpf;
+          const  registrocpf = req.body.registrocpf;
           const  senha = req.body.senha;
 
           const objFuncionario = new Funcionario()
-          objFuncionario.cpf = cpf
           objFuncionario.senha = senha
 
-          const funcionarioExistente = await objFuncionario.getFuncionario();
+          const funcionarioExistente = await objFuncionario.getFuncionario(registrocpf);
     
           if (!funcionarioExistente) {
             return res.status(404).json({ error: 'Funcionario não encontrado.' });
@@ -30,9 +29,9 @@ module.exports = class MiddlewareFuncionario {
 
 
     validarDadosFuncionario(req, res, next) {
-        const { cargo,usuario,senha } = req.body;
+        const { registrocpf,senha } = req.body;
     
-        if (!cargo || !usuario || senha ) {
+        if (!registrocpf || senha ) {
           return res.status(400).json({ error: 'Preencha todos os campos!'});
         } 
         next();
