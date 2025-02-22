@@ -107,7 +107,13 @@
             menuDiv.classList.toggle('abrir')
             btnAnimar.classList.toggle('ativo')
 
-                forms.style.display = "none";   // Oculta o formulário
+                forms.style.display = "none"; 
+                
+                if (menuDiv.classList.contains('abrir')) {
+        forms.style.display = "none"; // Esconde o formulário
+    } else {
+        forms.style.display = "flex"; // Mostra o formulário novamente
+    }// Oculta o formulário
         }
 
         /*codigo para o funcionamento do forms no site */

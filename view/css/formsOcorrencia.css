@@ -107,15 +107,22 @@ header .menu-desktop nav ul li a {
 
 .menu-mobile { 
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     width: 100%;
-    background-color:#00488B;
-    visibility: hidden;
-    height: 500px;
-    transition: 0.5s;
+    background-color: #00488B;
+    transform: translateY(-100%); /* Esconde o menu fora da tela */
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0; /* Menu invisível inicialmente */
+    z-index: 1000; /* Fica acima do formulário */
+    height: 100vh;
     overflow: hidden;
-    /* quando fechar o menu eles vao junto */
+}
+
+/* Quando o menu abre */
+.menu-mobile.abrir {
+    transform: translateY(0); /* Mostra o menu */
+    opacity: 1; /* Torna visível */
 }
 
 .menu-mobile nav a { 
@@ -145,7 +152,7 @@ header .menu-desktop nav ul li a {
     border: 2px solid #fff;
     transition: 0.2s;
     display: none;
-    z-index: 1000;
+    z-index: 1900;
 
 }
 
@@ -180,7 +187,7 @@ button.ativo {
         position: fixed; /* Fixa o botão na tela */
         top: 20px; /* Ajuste conforme necessário */
         right: 20px; /* Ajuste conforme necessário */
-        z-index: 1100; /* Garante que fique acima do menu */
+        z-index: 1900; /* Garante que fique acima do menu */
 }
 
 
@@ -195,7 +202,7 @@ button.ativo {
  
     #btn-menu {
         display: block;
-        z-index: 1000;
+        z-index: 1900;
 
     }
     .container{
@@ -216,6 +223,7 @@ button.ativo {
 .form-container {
     width: 300px; /* Largura do formulário */
     max-width: 400px; /* Evita que fique muito grande */
+    z-index: 0;
 }
 
 .student-info {
@@ -239,22 +247,50 @@ button.ativo {
     .student-info{
         padding: 20px;
     }
-}
-
-@media (max-width: 550px) { /* CORRETO */
-    .container-wrapper {
-        flex-direction: column; /* Empilha no mobile */
-        align-items: center;
-    }
-
-
     .form-container {
-        width: 100%; /* Ocupa toda a largura */
-        max-width: 350px; /* Limita para não ficar exagerado */
+        width: 220px; /* Largura do formulário */
+        max-width: 400px; /* Evita que fique muito grande */
     }
 }
+
+
+@media (max-width: 550px) {
+
+    
+    .menu-desktop {
+        height: auto; /* A altura se ajusta automaticamente */
+        width: 100%;  /* A barra ocupa toda a largura */
+        padding: 10px 10px; /* Adiciona um espaço vertical */
+    }
+
+    .menu-desktop nav ul {
+        display: flex; /* Torna a lista flexível */
+        flex-direction: row; /* Alinha os itens horizontalmente */
+        justify-content: space-around; /* Distribui o espaço igualmente */
+        align-items: center; /* Centraliza os itens na vertical */
+        padding: 0;
+    }
+
+    .menu-desktop nav ul li {
+        padding: 7px; /* Ajusta o espaçamento entre os itens */
+    }
+
+    .menu-desktop nav ul  {
+        display: none;
+    }
+    .form-container {
+        width: 300px; /* Largura do formulário */
+        max-width: 400px; /* Evita que fique muito grande */
+    }
+
+    .wrapper {
+        flex-direction: column; /* Coloca o conteúdo em coluna */
+    }
+}
+
 
 @media (max-width: 340px) { /* CORRETO */
+
 
     .divpesquisa{display: none;}
 }
