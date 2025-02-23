@@ -3,20 +3,20 @@ const Banco = require("./Banco")
 module.exports = class Funcionario {
 
     constructor() { 
-        this._registro= null
+        this._registro= ""
         this._nome = ""
-        this._cpf = ""
         this._senha = ""
+        this._cpf= ""
         this._TipoFuncionario_idTipoFuncionario = null
     }
     
     async getFuncionario(registrocpf) {
-        const conexao = Banco.getConexao();
-        console.log(this.matricula);
-        const mysql = "SELECT * FROM Funcionario WHERE senha = ? and registro = ? OR cpf = ? ";
-    
+        const conexao = Banco.getConexao();        
+        const mysql = "SELECT * FROM Funcionario WHERE senha = ? and (registro = ? OR cpf = ? )";
+        
         try {
-            const [result] = await conexao.promise().execute(mysql, [this._senha.registrocpf,registrocpf]);
+            const [result] = await conexao.promise().execute(mysql, [this._senha, registrocpf, registrocpf]);
+            
             if (result.length === 1) {
                 const funcionario = result[0];
                 this._nome = funcionario.nome;
@@ -30,6 +30,7 @@ module.exports = class Funcionario {
             return false;
         }
     }
+    
 
     async createFromCsv() {
         const conexao = Banco.getConexao();

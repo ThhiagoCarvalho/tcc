@@ -8,20 +8,19 @@
 </head>
 <body>
     <main>
-    <div class="container">
-        <div class="header">
-            <div class="logo">
-                <img src="./logo.png">
+        <div class="container">
+            <div class="header">
+                <div class="logo">
+                    <img src="./logo.png">
+                </div>
+                <h2>Sistema de Ocorrências</h2>
+                <h2>UNIVAP Centro</h2>
             </div>
-            <h2>Sistema de Ocorrências</h2>
-            <h2>UNIVAP Centro</h2>
-        </div>
 
-        <div class="login_body">
+            <div class="login_body">
                 <form>
-
                     <div class="input_box">
-                        <input type="text" placeholder="Registro ou CPF" id="regristocpf" required>
+                        <input type="text" placeholder="Registro ou CPF" id="registrocpf" required>
                     </div>
 
                     <div class="input_box">
@@ -32,67 +31,70 @@
                     </div>
 
                     <div>
-                        <button class="buttonOK">Entrar</button>
+                        <button id="buttonOK" type="button" class="buttonOK">Entrar</button>
                     </div>
 
-                    <div id="error-message" class="errorMensagge" style="display: none;"> </div>
+                    <div id="error-message" class="errorMensagge" style="display: none;"></div>
                 </form>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
+
     <script>
-        const mensage_error = document.getElementById("error-message")
-        const buttonOK = document.getElementById("buttonOK")
-        const regristocpf = document.getElementById("regristocpf")
-        const senhatxt = document.getElementById("senhatxt")
+        const mensage_error = document.getElementById("error-message");
+        const buttonOK = document.getElementById("buttonOK");
+        const registrocpf = document.getElementById("registrocpf");
+        const senhatxt = document.getElementById("senhatxt");
         
         buttonOK.onclick = function() { 
             login();
         };
 
-        function  login() { 
-            let regristocpf = regristocpf.value
-            let senha = senhatxt.value
+        function login() { 
+            let registro = registrocpf.value;
+            let senha = senhatxt.value;
 
             let jsonEnvio = { 
-                "regristocpf":regristocpf,
-                "senha":senha
-            }
+                "registrocpf": registro,
+                "senha": senha
+            };
 
             let uri = '/funcionarios/login';
             fetch(uri, {
                 method: "POST",
-                body: jsonEnvio
-            })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                processarResultados()
-            })
-            .catch((error) => {
-                console.error("Error:", error);
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonEnvio)
+            }).then((response) => {
+                return response.text();
+            }).then((data) => {
+                processarResultados(data)
+                
+            }).catch((error) => {
+                console.log( error);
             });
-        }
-        
 
-        function processarResultados (texto_json) { 
+        }
+        function processarResultados(texto_json) { 
+            respJson = JSON.parse(texto_json)
             try {
-            if (texto_json.status == false){
-                mensage_error.textContent = texto_json.msg
-                mensage_error.style.display = "block"
-                return; 
-            } else {
-                mensage_error.style.display = "none"
-                localStorage.setItem("Usuario", JSON.stringify(texto_json.Usuario)); 
-                window.location.href= "../html/paginaInicial.html";
-            }   
-        }  catch (error) {
-        console.error("Erro ao processar o JSON:", error);
-        console.error("A resposta não é um JSON válido:", json);
-        }    
-    }
+                if (respJson.status == false) {
+                    mensage_error.textContent = respJson.error;
+                    mensage_error.style.display = "block";
+                    return;
+                } else {
+                    mensage_error.style.display = "none";
+                    localStorage.setItem("Funcionario", JSON.stringify(respJson));
+                    window.location.href = "../html/paginaInicial.html";
+                }   
+            } catch (error) {
+                console.error("Erro ao processar o JSON:", error);
+                mensage_error.textContent = "Erro ao processar a resposta do servidor.";
+                mensage_error.style.display = "block";
+            }    
+        }
     </script>
 </body>
-
 </html>

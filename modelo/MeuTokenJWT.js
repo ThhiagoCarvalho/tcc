@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-module.exports  = class MeuTokenJWT  { 
+module.exports = class MeuTokenJWT {
     constructor() {
         this._key = "K7k6ezDzv7t0DEatig07fdRF2Oe4Y46UG9h35vYgJVk"; // Chave secreta
         this._alg = 'HS256'; // Algoritmo de criptografia
@@ -10,7 +10,6 @@ module.exports  = class MeuTokenJWT  {
         this._sub = "ocorrenciasescolares"; // Assunto do token
         this._duracaoToken = 3600 * 24 * 3000; // Duração do token (30 dias)
     }
-
 
     gerarToken(parametroClaims) {
         const headers = {
@@ -24,18 +23,15 @@ module.exports  = class MeuTokenJWT  {
             iat: Math.floor(Date.now() / 1000), // Momento de criação (em segundos)
             exp: Math.floor(Date.now() / 1000) + this._duracaoToken, // Expiração (em segundos)
             nbf: Math.floor(Date.now() / 1000), // Não é válido antes do tempo especificado
-            jti: require('crypto').cpf(16).toString('hex'), // Identificador único (jti)
+            jti: require('crypto').randomBytes(16).toString('hex'), // Identificador único (jti)
             cpf: parametroClaims.cpf, // Claims públicas -> cpf
             senha: parametroClaims.senha, // Claims públicas -> senha
-
         };
 
         const token = jwt.sign(payload, this._key, { algorithm: this._alg, header: headers });
 
         return token;
     }
-
-
 
     validarToken(stringToken) {
         if (!stringToken || stringToken.trim() === "") {
@@ -71,6 +67,4 @@ module.exports  = class MeuTokenJWT  {
     setAlg(alg) {
         this._alg = alg;
     }
-        
-
 }
